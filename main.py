@@ -21,7 +21,7 @@ while flag:
         exp = input('>> ')
         print(">> Write a string to verify:")
         w = input('>> ')
-        # try:
+
         my_regex = fix_regex(exp)
         nfa = NFA(my_regex)
         alphabet, alphabet_print = utils.get_alphabet(nfa.make_trans_function())
@@ -32,8 +32,6 @@ while flag:
         print('time elapsed :', end - start)
         utils.graph_fa(nfa.get_states(), alphabet, str(nfa.start_state.id), {str(nfa.final_state.id)}, nfa.make_trans_function(), 'graphs/nfa')
         
-        # except:
-        #     print('An error ocurred with the creation of the nfa with thompson algorithm')
     elif users_choice == 2:
         pass
     elif users_choice == 3:
