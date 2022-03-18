@@ -3,6 +3,7 @@ from NFA import NFA
 from Node import Node
 import utils
 from regex import *
+import time
 
 flag = true
 while flag:
@@ -24,8 +25,11 @@ while flag:
         my_regex = fix_regex(exp)
         nfa = NFA(my_regex)
         alphabet, alphabet_print = utils.get_alphabet(nfa.make_trans_function())
+        start = time.time()
         respuesta = nfa.simulate_string(w)
+        end = time.time()
         print(f'Is {w} accepted in {exp}? -> ', respuesta)
+        print('time elapsed :', end - start)
         utils.graph_fa(nfa.get_states(), alphabet, str(nfa.start_state.id), {str(nfa.final_state.id)}, nfa.make_trans_function(), 'graphs/nfa')
         
         # except:

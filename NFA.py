@@ -18,7 +18,7 @@ class NFA():
         
     # Verifies if a given character belongs to the valid symbols (letters, numbers and epsilon)
     def is_char_symbol(self, character):
-        symbols = 'abcdefghijklmnopqrstuvwxyz0123456789' + 'ε'
+        symbols = 'ε'+'abcdefghijklmnopqrstuvwxyz0123456789'
         return symbols.find(character) != -1
 
 

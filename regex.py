@@ -5,9 +5,9 @@ def fix_regex(expresion):
     i = 0
     special_cases = {
         'positive_closure_group':')+',
-        'null_check_group':')?',
+        'null_check_group':')¿',
         'positive_closure':'+',
-        'null_check':'?',
+        'null_check':'¿',
     }
     # Case 01: positive closure (parenthesis)
     if expresion.find(special_cases['positive_closure_group']) != -1:
@@ -39,7 +39,7 @@ def fix_regex(expresion):
 
             if expresion[i] == ')':
                 regex_list.append(expresion[i])  # current pos
-                if expresion[i + 1] == '?':     # is the next pos null check?
+                if expresion[i + 1] == '¿':     # is the next pos null check?
                     last_index = i + 1
                     regex_list.append('|')
                     regex_list.append('ε')
@@ -70,16 +70,15 @@ def fix_regex(expresion):
     if expresion.find(special_cases['null_check']) != -1:
         while final_regex.find(special_cases['null_check']) != -1:
         # while '?' in regex_copy:
-            i = final_regex.find('?')
+            i = final_regex.find('¿')
             symbol = final_regex[i - 1]
 
-            final_regex = final_regex.replace(symbol + '?', '(' + symbol + '|' + 'ε' + ')')
+            final_regex = final_regex.replace(symbol + '¿', '(' + symbol + '|' + 'ε' + ')')
 
     # Case 05: user did not put the same amount of open parenthesis and close parenthesis
     if final_regex.count('(') > final_regex.count(')'):
         for i in range(final_regex.count('(') - final_regex.count(')')):
             final_regex += ')'
-            print(final_regex)
 
     elif final_regex.count('(') < final_regex.count(')'):
         for i in range(final_regex.count(')') - final_regex.count('(')):
@@ -88,7 +87,7 @@ def fix_regex(expresion):
     return add_explicit_concatenation(final_regex)
 
 def add_explicit_concatenation(regex):
-    valid_operators = ['(','*','|','?','+']
+    valid_operators = ['(','*','|','¿','+']
     enhanced_regex = ''
     i = 0
     
@@ -100,9 +99,9 @@ def add_explicit_concatenation(regex):
             enhanced_regex += regex[i]+'.'
         elif regex[i] == '*' and regex[i+1] == '(':
             enhanced_regex += regex[i]+'.'
-        elif regex[i] == '?' and regex[i+1] != ')' and not (regex[i+1] in valid_operators):
+        elif regex[i] == '¿' and regex[i+1] != ')' and not (regex[i+1] in valid_operators):
             enhanced_regex += regex[i]+'.'
-        elif regex[i] == '?' and regex[i+1] == '(':
+        elif regex[i] == '¿' and regex[i+1] == '(':
             enhanced_regex += regex[i]+'.'
         elif not (regex[i] in valid_operators) and regex[i+1] == ')':
             enhanced_regex += regex[i]
