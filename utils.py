@@ -12,3 +12,11 @@ def graph_fa(states, alphabet, initial_state, accepting_states, transition_funct
     fa = SimpleDFA(states, alphabet, initial_state, accepting_states, transition_function)
     graph = fa.to_graphviz()
     graph.render(name)
+
+# syntax tree utilities
+
+def peek(self, stack):
+    if stack:
+        return stack[-1] #Last element
+    else:
+        return None

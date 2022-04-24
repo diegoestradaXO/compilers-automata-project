@@ -1,20 +1,34 @@
 digraph {
 	fake [style=invisible]
-	4
-	2
+	13
 	3
-	7
-	6
-	8 [shape=doublecircle]
-	5 [root=true]
+	4
+	9
+	12
+	10
+	5
+	8
+	14 [shape=doublecircle]
+	2
+	7 [root=true]
 	1
-	fake -> 5 [style=bold]
-	6 -> 7 [label=a]
-	5 -> 1 [label="ε"]
-	4 -> 8 [label="ε"]
-	5 -> 6 [label="ε "]
-	7 -> 8 [label="ε"]
-	1 -> 2 [label=a]
-	3 -> 4 [label=b]
-	2 -> 3 [label=b]
+	6
+	fake -> 7 [style=bold]
+	3 -> 5 [label=a]
+	8 -> 9 [label=b]
+	2 -> 4 [label=b]
+	7 -> 1 [label="ε"]
+	9 -> 10 [label=a]
+	13 -> 12 [label="ε "]
+	7 -> 8 [label="ε "]
+	12 -> 13 [label=b]
+	10 -> 12 [label="ε"]
+	10 -> 14 [label="ε "]
+	1 -> 2 [label="ε "]
+	4 -> 6 [label="ε"]
+	1 -> 3 [label="ε"]
+	5 -> 6 [label="ε"]
+	6 -> 8 [label="ε"]
+	6 -> 1 [label="ε "]
+	13 -> 14 [label="ε"]
 }

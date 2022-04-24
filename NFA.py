@@ -1,6 +1,6 @@
 from email.quoprimime import body_encode
 from operator import truediv
-from Node import Node
+from Node import NFA_Node
 from re import search
 from regex import *
 
@@ -104,8 +104,8 @@ class NFA():
         if type(a) == tuple and type(b) == tuple:
             start_a, end_a = [*a]
             start_b, end_b = [*b]
-            end_node = Node(self.ids + 2, [])
-            start_node = Node(self.ids + 1, [('ε', start_a), ('ε', start_b)])
+            end_node = NFA_Node(self.ids + 2, [])
+            start_node = NFA_Node(self.ids + 1, [('ε', start_a), ('ε', start_b)])
             end_a.AddTransition('ε', end_node)
             end_b.AddTransition('ε', end_node)
             self.ids += 2
@@ -114,12 +114,12 @@ class NFA():
             return start_node, end_node
             
         elif type(a) != tuple and type(b) != tuple:
-            end_node = Node(self.ids + 6, [])
-            end_a_node = Node(self.ids + 5, [('ε', end_node)])
-            end_b_node = Node(self.ids + 4, [('ε', end_node)])
-            start_a_node = Node(self.ids + 3, [(a, end_a_node)])
-            start_b_node = Node(self.ids + 2, [(b, end_b_node)])
-            start_node = Node(self.ids + 1, [('ε', start_a_node), ('ε', start_b_node)])
+            end_node = NFA_Node(self.ids + 6, [])
+            end_a_node = NFA_Node(self.ids + 5, [('ε', end_node)])
+            end_b_node = NFA_Node(self.ids + 4, [('ε', end_node)])
+            start_a_node = NFA_Node(self.ids + 3, [(a, end_a_node)])
+            start_b_node = NFA_Node(self.ids + 2, [(b, end_b_node)])
+            start_node = NFA_Node(self.ids + 1, [('ε', start_a_node), ('ε', start_b_node)])
             self.ids += 6
             self.states.append(end_node)
             self.states.append(end_a_node)
@@ -130,10 +130,10 @@ class NFA():
             return start_node, end_node
         elif type(a) != tuple and type(b) == tuple:
             start_b, end_b = [*b]
-            end_node = Node(self.ids + 4, [])
-            end_a_node = Node(self.ids + 3, [('ε', end_node)])
-            start_a_node = Node(self.ids + 2, [(a, end_a_node)])
-            start_node = Node(self.ids + 1, [('ε', start_b), ('ε', start_a_node)])
+            end_node = NFA_Node(self.ids + 4, [])
+            end_a_node = NFA_Node(self.ids + 3, [('ε', end_node)])
+            start_a_node = NFA_Node(self.ids + 2, [(a, end_a_node)])
+            start_node = NFA_Node(self.ids + 1, [('ε', start_b), ('ε', start_a_node)])
             end_b.AddTransition('ε', end_node)
             self.ids += 4
             self.states.append(end_node)
@@ -143,10 +143,10 @@ class NFA():
             return start_node, end_node
         elif type(a) == tuple and type(b) != tuple:
             start_a, end_a = [*a]
-            end_node = Node(self.ids + 4, [])
-            end_b_node = Node(self.ids + 3, [('ε', end_node)])
-            start_b_node = Node(self.ids + 2, [(b, end_b_node)])
-            start_node = Node(self.ids + 1, [('ε', start_a), ('ε', start_b_node)])
+            end_node = NFA_Node(self.ids + 4, [])
+            end_b_node = NFA_Node(self.ids + 3, [('ε', end_node)])
+            start_b_node = NFA_Node(self.ids + 2, [(b, end_b_node)])
+            start_node = NFA_Node(self.ids + 1, [('ε', start_a), ('ε', start_b_node)])
             end_a.AddTransition('ε', end_node)
             self.ids += 4
             self.states.append(end_node)
@@ -168,9 +168,9 @@ class NFA():
             self.merge_nodes(end_a, start_b)
             return start_a, end_b
         elif type(a) != tuple and type(b) != tuple:
-            b_node = Node(self.ids + 3, [])
-            a_node = Node(self.ids + 2, [(b, b_node)])
-            start_node = Node(self.ids + 1, [(a, a_node)])
+            b_node = NFA_Node(self.ids + 3, [])
+            a_node = NFA_Node(self.ids + 2, [(b, b_node)])
+            start_node = NFA_Node(self.ids + 1, [(a, a_node)])
             self.ids += 3
             self.states.append(start_node)
             self.states.append(a_node)
@@ -178,13 +178,13 @@ class NFA():
             return start_node, b_node
         elif type(a) != tuple and type(b) == tuple:
             start_b, end_b = [*b]
-            start_node = Node(self.ids + 1, [(a, start_b)])
+            start_node = NFA_Node(self.ids + 1, [(a, start_b)])
             self.states.append(start_node)
             self.ids += 1
             return start_node, end_b
         elif type(a) == tuple and type(b) != tuple:
             start_a, end_a = [*a]
-            end_node = Node(self.ids + 1, [])
+            end_node = NFA_Node(self.ids + 1, [])
             self.states.append(end_node)
             end_a.AddTransition(b, end_node)
             self.ids += 1
@@ -199,8 +199,8 @@ class NFA():
 
         if type(a) == tuple:
             start_a, end_a = [*a]
-            end_node = Node(self.ids + 2, [])
-            start_node = Node(self.ids + 1, [('ε', start_a), ('ε', end_node)])
+            end_node = NFA_Node(self.ids + 2, [])
+            start_node = NFA_Node(self.ids + 1, [('ε', start_a), ('ε', end_node)])
             end_a.AddTransition('ε', end_node)
             end_a.AddTransition('ε', start_a)
             self.ids += 2
@@ -208,10 +208,10 @@ class NFA():
             self.states.append(end_node)
             return start_node, end_node
         else:
-            end_node = Node(self.ids + 4, [])
-            node3 = Node(self.ids + 3, [('ε', end_node)])
-            node2 = Node(self.ids + 2, [(a, node3)])
-            start_node = Node(self.ids + 1, [('ε', node2), ('ε', end_node)])
+            end_node = NFA_Node(self.ids + 4, [])
+            node3 = NFA_Node(self.ids + 3, [('ε', end_node)])
+            node2 = NFA_Node(self.ids + 2, [(a, node3)])
+            start_node = NFA_Node(self.ids + 1, [('ε', node2), ('ε', end_node)])
             node3.AddTransition('ε', node2)
             self.ids += 4
             self.states.append(start_node)

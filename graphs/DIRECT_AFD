@@ -1,0 +1,14 @@
+digraph {
+	fake [style=invisible]
+	D [shape=doublecircle]
+	A [shape=doublecircle]
+	S [root=true shape=doublecircle]
+	B
+	C
+	fake -> S [style=bold]
+	S -> B [label=b]
+	D -> B [label=b]
+	C -> D [label=b]
+	B -> C [label=a]
+	S -> A [label=a]
+}
