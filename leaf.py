@@ -13,12 +13,11 @@ class Leaf():
         self.AddFirstPos()
         self.AddLastPos()
 
-    # Obtiene el nombre de la hoja
+
     def GetName(self):
         name = f'{self.name} - {self.position}'
         return name
 
-    # Agrega el firstpos de la hoja
     def AddFirstPos(self):
         if self.is_operator:
             if self.name == '|':
@@ -34,7 +33,6 @@ class Leaf():
             if self.name != 'ε':
                 self.first_pos.append(self.position)
 
-    # Agrega el lastpos de la hoja
     def AddLastPos(self):
         if self.is_operator:
             if self.name == '|':
